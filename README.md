@@ -4,16 +4,17 @@
 > Using Branch and Bound Method
 
 ## Introduction
----
+
 
 ## Requirement
-> Having Python 3
+1. Having Python 3
 
 ## Running the project
----
-Go to src directory in this project in command line.
->> ..\Tucil3-STIMA\src>
 
+Go to src directory in this project in command line.
+```
+ ..\Tucil3-STIMA\src>
+```
 Type in into command line :
 ```bash
 py Main.py
