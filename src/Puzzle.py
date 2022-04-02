@@ -40,7 +40,14 @@ class Puzzle :
                 if(self.puzzle[i][j] == 16):
                     return (i,j)
 
-    def move(self, row, column, move):
+
+    def isThereAreState(self, dict, matriks):
+        for i in range(len(dict)):
+            if(dict[i] == matriks):
+                return True
+        return False
+
+    def move(self, row, column, move, dict):
         emptyRow, emptyCol = self.findEmptySlot()
         
         if(emptyRow+row>=0 and emptyRow+row<=3 and emptyCol+column>=0 and emptyCol+column<=3):
@@ -49,7 +56,11 @@ class Puzzle :
             newPuzzle.lastMove = move
             newPuzzle.TotalMove.append(move)
             newPuzzle.puzzle[emptyRow][emptyCol], newPuzzle.puzzle[emptyRow+row][emptyCol+column] = newPuzzle.puzzle[emptyRow+row][emptyCol+column], newPuzzle.puzzle[emptyRow][emptyCol]
-            return newPuzzle
+            if(not self.isThereAreState(dict, newPuzzle.puzzle)):
+                dict[len(dict)] = newPuzzle.puzzle
+                return newPuzzle
+            else:
+                return None
         else:
             return None
 
@@ -97,5 +108,8 @@ class Puzzle :
             self.printPuzzle()
 
         print("\nPuzzle Solved")
+        print("The Step : ", end='')
+        for i in range(len(totalMove)):
+            print(totalMove[i], end=' ')
         print("\nStep count :", len(totalMove))
     

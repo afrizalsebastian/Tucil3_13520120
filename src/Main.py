@@ -43,16 +43,26 @@ def isThereAreState(dict, matriks):
             return True
     return False
 
-if __name__ == '__main__' :
-    
+def mainMenu():
     print("--- Selamat Datang ---")
     print("---------Menu---------")
-    print("1. Masukan Puzzle Melalui Konsol")
+    print("1. Masukan Puzzle Melalui Konsole")
     print("2. Masukan Puzzle Melalui File")
-    print("Else. Exit")
-    print(">> ", end='')
-    menu = int(input(""))
+    print("0. Exit")
 
+if __name__ == '__main__' :
+    
+    mainMenu()
+    print(">>", end=" ")
+    menu = int(input())
+    while(menu != 1 and menu != 2 and menu !=0):
+        print("Masukan Salah!\n")
+        print(">>", end=" ")
+        menu = int(input())
+    
+    
+
+    print()
     initialState = [[0 for j in range(4)] for i in range(4)]
     if(menu == 1):
         print("Bagian Kosong diganti dengan '-' ")
@@ -88,9 +98,10 @@ if __name__ == '__main__' :
                                   
     elif(menu == 2):
         path = "../test/"
-        fileName = input("Masukkan nama file : ")
+        fileName = input("Masukkan nama file : ")       
         path += fileName
 
+        print()
         file = open(path, "r")
         line = file.readlines()
         for i in range(len(line)):
@@ -112,7 +123,7 @@ if __name__ == '__main__' :
                         j += 1
                 
                 if(k == len(value)-1):
-                    if(temp == '-'):
+                    if(temp == '-' or temp=='-\n'):
                         initialState[i][j] = 16
                         temp = ""
                         j+=1
@@ -122,13 +133,14 @@ if __name__ == '__main__' :
                         temp = ""
                         j += 1
         file.close()
-    else:
+    elif(menu == 0):
         exit()
+
+    print("Kurang(i) = ", kurangI(initialState)+emptySlot(initialState),"\n")
 
     startTime = timeit.default_timer()
     if(isSolveAble(initialState)):
-        print("Puzzle is solveable")
-        print("Kurang(i) = ", kurangI(initialState)+emptySlot(initialState))
+        print("Puzzle is solveable")       
         pQueue = PriorityQueue(lambda x,y : x.cost <= y.cost)
 
         moveUnit = [(-1,0), (0,-1), (1,0),(0,1)]
@@ -153,15 +165,12 @@ if __name__ == '__main__' :
                     if(current.lastMove == ""):
                         row, col = moveUnit[i]
 
-                        nextPuzzle = current.move(row, col, moveName[i])
+                        nextPuzzle = current.move(row, col, moveName[i], stateTracking)
                         if(nextPuzzle != None) :
                                 nextPuzzle.setCost()
-
                                 pQueue.enqueue(nextPuzzle)
-
                                 nodeCount+=1
             
-
                     else:
                         lastMove = current.lastMove
                         idxMove = 0
@@ -176,20 +185,14 @@ if __name__ == '__main__' :
                         if(idxMove != lastMove):
                             row, col = moveUnit[i]
 
-                            nextPuzzle = current.move(row, col, moveName[i])
+                            nextPuzzle = current.move(row, col, moveName[i], stateTracking)
                             if(nextPuzzle != None) :
                                 nextPuzzle.setCost()
-
-                                if(not isThereAreState(stateTracking, nextPuzzle.puzzle)):
-                                    pQueue.enqueue(nextPuzzle)
-
-                                    nodeCount+=1
-                                    startTime
-                                    stateTracking[len(stateTracking)] = nextPuzzle.puzzle
-
+                                pQueue.enqueue(nextPuzzle)
+                                nodeCount+=1
 
         initialPuzzle.printAll(pQueue.first().TotalMove)
-        print("Raised Node Count : ", nodeCount)
+        print("\nRaised Node Count : ", nodeCount)
     else:
         print("Puzzle is unsolveable")
     stopTime = timeit.default_timer()
