@@ -19,6 +19,8 @@ Type in into command line :
 ```bash
 py Main.py
 ```
+Or <br>
+Run **run.bat** in bin Folder<br>
 ### Input
 **The Empty Tile change with '-'**<br><br>
 If project get input from console <br>
