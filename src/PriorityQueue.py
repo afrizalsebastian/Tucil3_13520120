@@ -24,7 +24,5 @@ class PriorityQueue :
         
         self.buffer.insert(idx, puzzle)
 
-    def dequeu(self):
+    def dequeue(self):
         self.buffer.pop(0)
-
-

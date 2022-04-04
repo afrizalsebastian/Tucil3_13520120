@@ -160,7 +160,7 @@ if __name__ == '__main__' :
                 finished = True
             else:
                 current = pQueue.first()
-                pQueue.dequeu()
+                pQueue.dequeue()
                 for i in range(len(moveName)):
                     if(current.lastMove == ""):
                         row, col = moveUnit[i]

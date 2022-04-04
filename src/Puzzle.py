@@ -1,7 +1,4 @@
 import copy
-
-from numpy import moveaxis
-
 class Puzzle :
     
     def __init__(self, thePuzzle, depth):
